@@ -43,26 +43,23 @@ class Admin_Controller{
             $customer_id = $_POST['customer_id'];
             $flight_id = $_POST['flight_id'];
 
-            $booking_id = $this->model->bookTicket($customer_id, $flight_id);
+            $booking_id = $this->model->bookTicket($customer_id);
 
             if ($booking_id) {
                 $data = [
                     'message' => 'Ticket booked successfully.',
-                    'redirect_url' => '/admin/bookings'
                 ];
-                header('Location:' . BASE_PATH);
-                
+
                 echo json_encode($data);
             } else {
                 $errors = [
                     'error' => 'Failed to book ticket.'
                 ];
-                
                 echo json_encode($errors);
             }
-        } else {
-            return view('admin.bookings');
-        }
+        } 
+            
+        
     }
 }
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 spl_autoload_register(function ($class) {
     $class = explode("\\", $class);
     $class = end($class); 
@@ -32,45 +33,27 @@ $request = $_SERVER['REQUEST_URI'];
 
 define("BASE_PATH", "/");
 
-use booking_m\Booking_model;
-$booking= new Booking_model($db);
 
-use city_m\City_model;
-use city_c\City_controller;
-$city= new City_model($db);
-$cityC=new City_controller($city);
+#use app\customer_m\Customer_model;
+#$customer= new Customer_model($db);
+#use customer_c\Customer_controller;
+#$customer= new Customer_controller($db);
 
-use customer_m\Customer_model;
-$customer= new Customer_model();
 
+use admin_c\Admin_controller;
+$admin= new Admin_controller($db);
 use admin_m\Admin_model;
-$admin= new Admin_model();
+$adminm= new Admin_model($db);
 
-use company_m\Company_model;
-$company= new Company_model();
 
-use hotel_m\Hotel_model;
-$hotel= new Hotel_model();
-
-use rating_m\Rating_model;
-$rating= new Rating_model();
-
-use ticket_m\Ticket_model;
-$ticket= new Ticket_model;
 
 switch($request)
 {
-    case BASE_PATH."showCities":
-        $cityC->selectCities();
+    case BASE_PATH."login":
+        $admin->login();
         break;
-    case BASE_PATH . "addCity":
-        $cityC->insertCity();
-        break;
-    case BASE_PATH . "editCity?id=" . $_GET['id']:
-        $cityC->updateCity();
-        break;
-    case BASE_PATH . "deleteCity?id=" . $_GET["id"]:
-        $cityC->deleteCity();
+    case BASE_PATH . "bookTicket":
+        $admin->bookTicket();
         break;
     default :
         $response = ['message' => 'no such an action'];

@@ -17,7 +17,9 @@ class Company_model{
             $this->db->where("id", $id);
             return $this->db->get("companies");    
         }
-        return $this->db->get("companies");
+        else{
+            return $this->db->get("companies");
+        }
     }
 
     public function insertcompanies($data)
@@ -55,8 +57,6 @@ class Company_model{
             return $response;
         }
     }
-
-
 }
 
 ?>

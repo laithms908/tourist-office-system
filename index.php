@@ -53,10 +53,15 @@ $company= new Company_model($db);
 $companyC=new Company_controller($company);
 
 use hotel_m\Hotel_model;
-$hotel= new Hotel_model();
+use hotel_c\Hotel_controller;
+$hotel= new Hotel_model($db);
+$hotelC= new Hotel_controller($hotel);
 
 use rating_m\Rating_model;
-$rating= new Rating_model();
+use rating_c\Rating_controller;
+$rating= new Rating_model($db);
+$ratingC= new Rating_controller($rating);
+
 
 use ticket_m\Ticket_model;
 $ticket= new Ticket_model;
@@ -65,9 +70,21 @@ switch($request)
 {
     case BASE_PATH :
         echo "welcom to our tourist-office-system";
+        break;
+    case BASE_PATH . "showRatings":
+        $ratingC->selectRatings();
         break;    
+    case BASE_PATH . "addRating":
+        $ratingC->insertRatings();
+        break;    
+    case BASE_PATH . "editRating?id=" .  $_GET['id']:
+        $ratingC->updateRating($_GET['id']);
+        break;
+    case BASE_PATH . "deleteRating?id=" . $_GET['id']:
+        $ratingC->deleteRating($_GET['id']);
+        break;
     case BASE_PATH . "showCompanies":
-        $companyC->selectCompany($_GET['id']);
+        $companyC->selectCompany();
         break;
     case BASE_PATH . "addcompany":
         $companyC->insertCompany();

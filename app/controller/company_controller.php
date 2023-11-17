@@ -34,8 +34,7 @@ class Company_controller
                 $insert = $this->company->insertcompanies($data);
                 echo json_encode($insert);
             }    
-        }
-        
+        } 
     }
     
     public function updateCompany($id)
@@ -48,8 +47,6 @@ class Company_controller
                 $update=['message'=>'sorry but this id not exist'];
             }
             else {
-
-
                 $name = $_POST['name'];
                 $phone = $_POST['phone'];
                 $data=array();
@@ -70,7 +67,6 @@ class Company_controller
             if($this->validateId($id)){
                 
                 $check_id=$this->company->getCompany($id);
-                
                 if ($check_id==null){            
                     $delete=['message'=>'sorry but this id not exist'];
                 }
@@ -127,11 +123,7 @@ class Company_controller
                 echo json_encode($response);
             }
         }
-    
-
-    
-
-        
+     
 }
 //     if (!empty($name)) {
 //         $data['name'] = $name;

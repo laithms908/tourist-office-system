@@ -18,6 +18,17 @@ class City_controller
         echo json_encode($cites);
     }
 
+    public function selectCityValue()
+    {
+
+        $id = $_GET["id"];
+        if ($this->validateId($id)) {
+            $city = $this->city->getCityValue( $id);
+            echo json_encode($city);
+        }
+    }
+
+
     public function insertCity()
     {
         $name = $_POST['name'];
@@ -58,7 +69,9 @@ class City_controller
             
         }  
     }
-    public function deleteCity(){
+
+    public function deleteCity()
+    {
         $id = $_GET["id"];
         if ($this->validateId($id)) {
         $delete = $this->city->deleteCities($id);
@@ -104,5 +117,4 @@ class City_controller
             echo json_encode($response);
         }
     }
-    
 }

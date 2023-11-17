@@ -16,6 +16,12 @@ class City_model{
         return $this->db->get("cities");
     }
 
+    public function getCityValue($id)
+    {
+        $this->db->where("id",$id);
+        return $this->db->getValue("cities","name");
+    }
+
     public function insertCities($data)
     {
         $city=$this->db->insert('cities', $data);

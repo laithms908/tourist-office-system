@@ -15,21 +15,46 @@ class Booking_model{
         return $this->db->get("bookings");
     }
 
+    public function getOneBooking($id)
+    {
+        $this->db->where("id", $id);
+        return $this->db->getOne("bookings");
+    }
+
     public function insertBookings($data)
     {
-        $this->db->insert('bookings', $data);
+        $booking=$this->db->insert('bookings', $data);
+        if ($booking) {
+            $response = ['message' => 'booking was added'];
+            return $response;
+        } else {
+            $response = ['message' => 'failed to add booking: ' . $this->db->getLastError()];
+            return $response;
+        }
     }
 
     public function updateBookings($data, $id)
     {
         $this->db->where("id", $id);
-        $this->db->update("bookings", $data);
+        if ($this->db->update("bookings", $data)) {
+            $response = ['message' => 'Booking was updated'];
+            return $response;
+        } else {
+            $response = ['message' => 'update failed : ' . $this->db->getLastError()];
+            return $response;
+        }
     }
 
     public function deleteBookings($id)
     {
         $this->db->where("id", $id);
-        $this->db->delete("bookings");
+        if ($this->db->delete("bookings")) {
+            $response = ['message' => 'Booking was deleted'];
+            return $response;
+        } else {
+            $response = ['message' => 'delete failed : ' . $this->db->getLastError()];
+            return $response;
+        }
     }
 }
 

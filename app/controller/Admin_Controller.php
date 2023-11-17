@@ -41,7 +41,7 @@ class Admin_Controller{
     public function bookTicket() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $customer_id = $_POST['customer_id'];
-            $flight_id = $_POST['flight_id'];
+            #$flight_id = $_POST['flight_id'];
 
             $booking_id = $this->model->bookTicket($customer_id);
 

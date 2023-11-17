@@ -16,10 +16,23 @@ class City_model{
         return $this->db->get("cities");
     }
 
+    public function getCityValue($id)
+    {
+        $this->db->where("id",$id);
+        return $this->db->getValue("cities","name");
+    }
+
     public function insertCities($data)
     {
         $city=$this->db->insert('cities', $data);
-        return $city;
+        if($city){
+            $response = ['message' => 'City was added'];
+            return $response;
+        }
+        else{
+            $response = ['message' => 'failed to add city: ' . $this->db->getLastError()];
+            return $response;
+        }
     }
 
     public function updateCities($data, $id)

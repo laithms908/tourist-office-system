@@ -33,7 +33,9 @@ $request = $_SERVER['REQUEST_URI'];
 define("BASE_PATH", "/");
 
 use booking_m\Booking_model;
+use booking_c\Booking_controller;
 $booking= new Booking_model($db);
+$bookingC=new Booking_controller($booking);
 
 use city_m\City_model;
 use city_c\City_controller;
@@ -60,9 +62,27 @@ $ticket= new Ticket_model;
 
 switch($request)
 {
+    case BASE_PATH :
+        $bookingC->selectBookings();
+        break;
+    case BASE_PATH . "showBooking?id=" . $_GET['id']:
+        $bookingC->selectOneBooking();
+        break;    
+    case BASE_PATH."addBooking":
+        $bookingC->insertBooking();
+        break;
+    case BASE_PATH . "editBooking?id=" . $_GET['id']:
+        $bookingC->updatebooking();
+        break;
+    case BASE_PATH . "deleteBooking?id=" . $_GET['id']:
+        $bookingC->deleteBooking();
+        break;       
     case BASE_PATH."showCities":
         $cityC->selectCities();
         break;
+    case BASE_PATH . "showCity?id=" . $_GET['id']:
+        $cityC->selectCityValue();
+        break;    
     case BASE_PATH . "addCity":
         $cityC->insertCity();
         break;
@@ -76,6 +96,5 @@ switch($request)
         $response = ['message' => 'no such an action'];
         echo json_encode($response);
         break;
-
 
 }

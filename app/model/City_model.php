@@ -19,7 +19,14 @@ class City_model{
     public function insertCities($data)
     {
         $city=$this->db->insert('cities', $data);
-        return $city;
+        if($city){
+            $response = ['message' => 'City was added'];
+            return $response;
+        }
+        else{
+            $response = ['message' => 'failed to add city: ' . $this->db->getLastError()];
+            return $response;
+        }
     }
 
     public function updateCities($data, $id)

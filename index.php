@@ -60,6 +60,9 @@ $ticket= new Ticket_model;
 
 switch($request)
 {
+    case BASE_PATH :
+        $cityC->selectCities();
+        break;
     case BASE_PATH."showCities":
         $cityC->selectCities();
         break;
@@ -76,6 +79,5 @@ switch($request)
         $response = ['message' => 'no such an action'];
         echo json_encode($response);
         break;
-
 
 }

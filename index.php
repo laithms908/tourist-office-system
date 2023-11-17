@@ -1,8 +1,9 @@
 <?php
 spl_autoload_register(function ($class) {
+    
     $class = explode("\\", $class);
-    $class = end($class); 
-
+    $class = end($class);   
+   
     if (file_exists(__DIR__ . "/lib/db/" . $class . ".php")) {
         require_once __DIR__ . "/lib/db/" . $class . ".php";
     }
@@ -47,7 +48,9 @@ use admin_m\Admin_model;
 $admin= new Admin_model();
 
 use company_m\Company_model;
-$company= new Company_model();
+use company_c\Company_controller;
+$company= new Company_model($db);
+$companyC=new Company_controller($company);
 
 use hotel_m\Hotel_model;
 $hotel= new Hotel_model();
@@ -57,10 +60,25 @@ $rating= new Rating_model();
 
 use ticket_m\Ticket_model;
 $ticket= new Ticket_model;
-
+var_dump($request);
 switch($request)
 {
-    case BASE_PATH."showCities":
+    case BASE_PATH :
+        echo "welcom to our tourist-office-system";
+        break;    
+    case BASE_PATH . "showCompanies":
+        $companyC->selectCompany($_GET['id']);
+        break;
+    case BASE_PATH . "addcompany":
+        $companyC->insertCompany();
+        break;
+    case BASE_PATH . "editCompany?id=" .  $_GET['id']:
+        $companyC->updateCompany($_GET['id']);
+        break;
+    case BASE_PATH . "deleteCompany?id=" . $_GET['id']:
+        $companyC->deletecompany($_GET['id']);
+        break;
+    case BASE_PATH. "showCities":
         $cityC->selectCities();
         break;
     case BASE_PATH . "addCity":
@@ -69,13 +87,14 @@ switch($request)
     case BASE_PATH . "editCity?id=" . $_GET['id']:
         $cityC->updateCity();
         break;
-    case BASE_PATH . "deleteCity?id=" . $_GET["id"]:
+    case BASE_PATH . "deleteCity?id=" . $_GET['id']:
         $cityC->deleteCity();
         break;
+
     default :
         $response = ['message' => 'no such an action'];
         echo json_encode($response);
         break;
 
-
 }
+?>

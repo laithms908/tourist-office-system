@@ -34,22 +34,17 @@ $request = $_SERVER['REQUEST_URI'];
 define("BASE_PATH", "/");
 
 
-#use app\customer_m\Customer_model;
-#$customer= new Customer_model($db);
-#use customer_c\Customer_controller;
-#$customer= new Customer_controller($db);
-
-
 use admin_c\Admin_controller;
 $admin= new Admin_controller($db);
+
 use admin_m\Admin_model;
-$adminm= new Admin_model($db);
+$admin_m= new Admin_model($db);
 
 
 
 switch($request)
 {
-    case BASE_PATH."login":
+    case BASE_PATH. "login":
         $admin->login();
         break;
     case BASE_PATH . "bookTicket":

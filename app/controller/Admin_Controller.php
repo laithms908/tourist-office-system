@@ -19,14 +19,14 @@ class Admin_Controller{
             if ($admin && password_verify($password, $admin->password)) {
                 // Login successful
                 session_start();
+                // Set the session cookie to expire when the browser is closed
+                setcookie(session_name(), session_id(), 0, '/', '', false, true);
                 $_SESSION['admin_id'] = $admin->id;
-                header('Location:' . BASE_PATH);
                 
-                $data = [
-                    'redirect_url' => '/index.php',
-                ];
                 
-                echo json_encode($data);
+                $url = '/index.php';
+                $json = json_encode($url);
+                echo $json;
             } else {
                 // Login failed
                 $errors = [

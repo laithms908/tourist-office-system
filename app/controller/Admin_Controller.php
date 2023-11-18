@@ -2,15 +2,14 @@
 namespace admin_c ;
 
 class Admin_Controller{
-    private $model;
+    private $admin;
     
-    public function __construct(){
-        #$this->model = new Admin_Controller();
-        #$this->db = $db;
-
+    public function __construct($admin){
+        $this->admin = $admin;
+        
     }
     public function login(){
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        #if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $email = $_post['email'];
             $password = $_post['password'];
 
@@ -32,37 +31,52 @@ class Admin_Controller{
                 $errors = [
                     'email' => 'Email or password is incorrect.'
                 ];
+                echo json_encode(array("status"=>true,
+                "date"=>$data));
                 
-                echo json_encode($errors);;
-            }
-        }
-    }
-
-    public function bookTicket() {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $customer_id = $_POST['customer_id'];
-            #$flight_id = $_POST['flight_id'];
-
-            $booking_id = $this->model->bookTicket($customer_id);
-
-            if ($booking_id) {
-                $data = [
-                    'message' => 'Ticket booked successfully.'
-                ];
-
-                echo json_encode($data);
-            } else {
-                $errors = [
-                    'error' => 'Failed to book ticket.'
-                ];
                 echo json_encode($errors);
             }
-        } 
-            
-        
+        #}
     }
+
     public function signOut(){
         session_destroy();
+    }
+    public function addAdmin(){
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $data = ["name"=>$name,
+        "email"=>$email,
+        "password"=>$password
+         ];
+
+        if($this->db=add($data)){
+            echo json_encode(['status' => true, 'message' => 'Admin added successfully.']);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Failed to add admin.']);
+        }
+
+    }
+
+    public function editAdmin($id){
+        $this->id = $id;
+        if($this->db=edit($id)){
+            echo json_encode(['status' => true, 'message' => 'Admin added successfully.']);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Failed to add admin.']);
+        }
+
+
+    }
+    public function deleteAdmin($id){
+        $this->id = $id;
+        if($this->db=delete($id)){
+            echo json_encode(['status' => true, 'message' => 'Admin added successfully.']);
+        } else {
+            echo json_encode(['status' => false, 'message' => 'Failed to add admin.']);
+        }
+    
     }
 }
 ?>

@@ -1,20 +1,19 @@
 <?php
 namespace  customer_c;
 class Customer_Controller{
+    private $customer;
 
     public function __construct(){
-        $this->model = new Customer_model();
+        $this->customer = $customer;
 
     }
     public function index() {
-        $customers = $this->model->getCustomers();
+        $customers = $this->db->getCustomer();
 
-        return view('customers.index', [
-            'customers' => $customers,
-        ]);
+        
     }
 
-    public function add() {
+    public function insertCustomer() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $customername = $_POST['name'];
             $customerphone = $_POST['phone'];
@@ -27,17 +26,17 @@ class Customer_Controller{
                 'email' => $customeremail,
             ];
 
-            if ($this->model->addCustomers($data)) {
-                header('Location:' . BASE_PATH);
-                echo json_encode(['success' => true, 'message' => 'Customer added successfully.']);
+            if ($this->db->addCustomer($data)) {
+                
+                echo json_encode(['status' => true, 'message' => 'Customer added successfully.']);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to add customer.']);
+                echo json_encode(['status' => false, 'message' => 'Failed to add customer.']);
             }
         }
     }
 
 
-    public function edit($id) {
+    public function updateCustomer($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $username = $_POST['username'];
             $password = $_POST['password'];
@@ -46,21 +45,21 @@ class Customer_Controller{
                 'password' => $password,
             ];
 
-            if ($this->model->editCustomers($id, $data)) {
-                echo json_encode(['success' => true, 'message' => 'Customer updated successfully.']);
-                header('Location:' . BASE_PATH);
+            if ($this->db->editCustomer($id, $data)) {
+                echo json_encode(['status' => true, 'message' => 'Customer updated successfully.']);
+                
             } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to update customer.']);
+                echo json_encode(['status' => false, 'message' => 'Failed to update customer.']);
             }
         } 
     }
     
-    public function delete($id) {
+    public function deleteCustomers($id) {
         if ($this->model->deleteCustomer($id)) {
             header('Location:' . BASE_PATH);
-            echo json_encode(['success' => true, 'message' => 'Customer deleted successfully.']);
+            echo json_encode(['status' => true, 'message' => 'Customer deleted successfully.']);
         } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to delete customer.']);
+            echo json_encode(['status' => false, 'message' => 'Failed to delete customer.']);
         }
     }
 

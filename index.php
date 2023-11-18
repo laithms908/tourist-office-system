@@ -32,10 +32,11 @@ $db = new MysqliDb(
 $request = $_SERVER['REQUEST_URI'];
 
 define("BASE_PATH", "/");
+#define("BASE_PATH", "/tourist-office-system/");
 
 
-use admin_c\Admin_controller;
-$admin= new Admin_controller($db);
+use admin_c\Admin_Controller;
+$admin= new Admin_Controller();
 
 use admin_m\Admin_model;
 $admin_m= new Admin_model($db);
@@ -47,23 +48,20 @@ switch($request)
     case BASE_PATH. "login":
         $admin->login();
         break;
-    case BASE_PATH . "bookTicket":
-        $admin->bookTicket();
-        break;
     case BASE_PATH . "signOut":
-        $adminController->signOut();
+        $admin->signOut();
         break;
-    case BASE_PATH . "customers":
-        $customerController->index();
+    case BASE_PATH . "index":
+        $customer->index();
         break;
-    case BASE_PATH . "add":
-        $customerController->add();
+    case BASE_PATH . "insertCustomer":
+        $customer->insertCustomer();
         break;
-    case BASE_PATH . "customer/edit/" . $id:
-        $customerController->edit($id);
+    case BASE_PATH . "updateCustomer" :
+        $customer->updateCustomer($id);
         break;
-    case BASE_PATH . "customer/delete/" . $id:
-        $customerController->delete($id);
+    case BASE_PATH . "deleteCustomers" :
+        $customer->deleteCustomers($id);
         break;   
     default :
         $response = ['message' => 'no such an action'];

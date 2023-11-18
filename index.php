@@ -50,6 +50,21 @@ switch($request)
     case BASE_PATH . "bookTicket":
         $admin->bookTicket();
         break;
+    case BASE_PATH . "signOut":
+        $adminController->signOut();
+        break;
+    case BASE_PATH . "customers":
+        $customerController->index();
+        break;
+    case BASE_PATH . "add":
+        $customerController->add();
+        break;
+    case BASE_PATH . "customer/edit/" . $id:
+        $customerController->edit($id);
+        break;
+    case BASE_PATH . "customer/delete/" . $id:
+        $customerController->delete($id);
+        break;   
     default :
         $response = ['message' => 'no such an action'];
         echo json_encode($response);

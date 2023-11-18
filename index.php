@@ -20,7 +20,7 @@ spl_autoload_register(function ($class) {
     }
 });
 $config = require "config/config.php";
-
+//
 $db = new MysqliDb(
     $config['db_host'],
     $config['db_user'],

@@ -30,7 +30,7 @@ class Admin_Controller{
             } else {
                 // Login failed
                 $errors = [
-                    'email' => 'Email or password is incorrect.',
+                    'email' => 'Email or password is incorrect.'
                 ];
                 
                 echo json_encode($errors);;
@@ -47,7 +47,7 @@ class Admin_Controller{
 
             if ($booking_id) {
                 $data = [
-                    'message' => 'Ticket booked successfully.',
+                    'message' => 'Ticket booked successfully.'
                 ];
 
                 echo json_encode($data);
@@ -60,6 +60,9 @@ class Admin_Controller{
         } 
             
         
+    }
+    public function signOut(){
+        session_destroy();
     }
 }
 ?>

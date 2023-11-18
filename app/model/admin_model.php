@@ -18,6 +18,7 @@ class Admin_model{
 
        
     }
+    
 }
 
 ?>

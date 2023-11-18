@@ -1,9 +1,9 @@
 <?php
 namespace  customer_c;
-class CustomerController{
+class Customer_Controller{
 
     public function __construct(){
-        $this->model = new Customer_model($db);
+        $this->model = new Customer_model();
 
     }
     public function index() {
@@ -47,15 +47,24 @@ class CustomerController{
             ];
 
             if ($this->model->editCustomers($id, $data)) {
-                echo "User updated successfully!";
+                echo json_encode(['success' => true, 'message' => 'Customer updated successfully.']);
                 header('Location:' . BASE_PATH);
             } else {
-                echo "Failed to update customers.";
+                echo json_encode(['success' => false, 'message' => 'Failed to update customer.']);
             }
         } 
+    }
+    
+    public function delete($id) {
+        if ($this->model->deleteCustomer($id)) {
+            header('Location:' . BASE_PATH);
+            echo json_encode(['success' => true, 'message' => 'Customer deleted successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete customer.']);
+        }
     }
 
 
 }
-
+?>
 

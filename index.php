@@ -95,18 +95,7 @@ switch($request)
     case BASE_PATH . "deleteCompany?id=" . $_GET['id']:
         $companyC->deletecompany($_GET['id']);
         break;
-    case BASE_PATH. "showCities":
-        $cityC->selectCities();
-        break;
-    case BASE_PATH . "addCity":
-        $cityC->insertCity();
-        break;
-    case BASE_PATH . "editCity?id=" . $_GET['id']:
-        $cityC->updateCity();
-        break;
-    case BASE_PATH . "deleteCity?id=" . $_GET['id']:
-        $cityC->deleteCity();
-        break;
+
 
     default :
         $response = ['message' => 'no such an action'];

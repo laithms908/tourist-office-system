@@ -8,18 +8,30 @@ class Rating_model {
     {
         $this->db = $db;
     }
+//...................................................................
     public function getRatings($id=null)
     {
         if ($id!==null){
             $this->db->where("id", $id);
+            
             return  $this->db->get("ratings");
+            
         }
         else{
             return  $this->db->get("ratings");
         }
-            return $this->db->get("ratings");
     }
-
+//.....................................................................
+    public function getComment(){
+        $comments = $this->db->getValue("ratings","comment",null);
+        return $comments;
+    }     
+//...........................................................................................    
+    public function getStars(){
+        $stars = $this->db->getValue("ratings","star",null);
+        return $stars;
+    }
+//...........................................................................................
     public function insertRatings($data)
     {
         $rating=$this->db->insert('ratings', $data);
@@ -31,7 +43,7 @@ class Rating_model {
             return $response;
         }
     }
-    
+//...................................................................................................
     public function updateRatings($data, $id)
     {
         $this->db->where("id", $id);
@@ -43,7 +55,7 @@ class Rating_model {
             return $response;
         }
     }
-
+//....................................................................................................
     public function deleteRatings($id)
     {
         $this->db->where("id", $id);
@@ -56,7 +68,7 @@ class Rating_model {
         }
     }
 }
-
+//  THE END
 
 
 

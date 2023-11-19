@@ -33,39 +33,21 @@ $request = $_SERVER['REQUEST_URI'];
 
 define("BASE_PATH", "/");
 
-use booking_m\Booking_model;
-$booking= new Booking_model($db);
-
-use city_m\City_model;
-use city_c\City_controller;
-$city= new City_model($db);
-$cityC=new City_controller($city);
-
 use customer_m\Customer_model;
 $customer= new Customer_model();
-
-use admin_m\Admin_model;
-$admin= new Admin_model();
 
 use company_m\Company_model;
 use company_c\Company_controller;
 $company= new Company_model($db);
 $companyC=new Company_controller($company);
 
-use hotel_m\Hotel_model;
-use hotel_c\Hotel_controller;
-$hotel= new Hotel_model($db);
-$hotelC= new Hotel_controller($hotel);
 
 use rating_m\Rating_model;
 use rating_c\Rating_controller;
 $rating= new Rating_model($db);
-$ratingC= new Rating_controller($rating);
+$ratingC= new Rating_controller($rating);//$hotelC
 
 
-use ticket_m\Ticket_model;
-$ticket= new Ticket_model;
-var_dump($request);
 switch($request)
 {
     case BASE_PATH :

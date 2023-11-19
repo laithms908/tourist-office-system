@@ -30,13 +30,13 @@ class Company_model{
     }
 
     public function updateCompanies($data, $id)
-    {   var_dump($id);
+    {   
         $this->db->where("id", $id);
         if($this->db->update("companies", $data)){
 
-                $response = ['message' => 'company was updated'];
-                return $response;
-            }
+            $response = ['message' => 'company was updated'];
+            return $response;
+        }
         else{
             $response=['message'=>'update failed : '. $this->db->getLastError()];
             return $response;

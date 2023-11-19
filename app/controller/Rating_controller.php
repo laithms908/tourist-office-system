@@ -3,33 +3,39 @@ namespace rating_c;
 
 class Rating_controller
 {
-private $rating;
-
-public function __construct($rating)
-{
-    $this->rating = $rating;
-}
-    public function selectRatings()
+    private $rating;
+    private $customer;
+    public function __construct($rating,$customer=null)
     {
-        $ratings = $this->rating->getRatings();
-
-        echo json_encode($ratings);
+        $this->rating = $rating;
+        // $this->customer=$customer;
     }
-
+//...................................................................................................
+    public function selectRatings()
+    { 
+        // $customerName=$this->customer->getCustomerName();
+        $stars=$this->rating->getStars();
+        $comment=$this->rating->getComment();
+        $showReviews=array_map(function($stars,$comment){
+            return " stars " . $stars . " comment : "  .$comment ;},$stars,$comment);
+        
+        echo json_encode($showReviews);
+    }
+//...................................................................................................
     public function insertRatings()
     {
-        $customerId = $_POST['customer_id'];
-        $hotelId=$_POST["hotel_id"];
+        $customer_id = $_POST['customer_id'];
+        $hotel_id=$_POST["hotel_id"];
         $star = $_POST['star'];
         $comment =$_POST['comment'];
         
-        if ($this->validateId($customerId) && $this->validateId($hotelId) &&
+        if ($this->validateId($customer_id) && $this->validateId($hotel_id) &&
          $this->validateStar($star) && $this-> validateComment($comment)  ) {
-            var_dump($star);
+
             $data = [
                 "star" => "$star",
-                "customer_id" => "$customerId",
-                "hotel_id" => "$hotelId",
+                "customer_id" => "$customer_id",
+                "hotel_id" => "$hotel_id",
                 "comment"=>"$comment"
             ];
             $insert = $this->rating->insertRatings($data);
@@ -37,62 +43,74 @@ public function __construct($rating)
         }
         
     }
-
+//...................................................................................................
     public function updateRating($id)
     {
-        $check_id=$this->rating->getRatings($id);
-        if ($check_id==null){            
-            $update=['message'=>'sorry but this id not exist'];
-        }
-        else{
-            
-            $star = $_POST['star'];
-            $customerId = $_POST['customer_id'];
-            $hotelId = $_POST["hotel_id"];
-            $comment=$_POST["comment"];
-            $data = array('star'=>$star,'comment'=>$comment);    
-            $data['comment']=$this->validateComment($_POST["comment"]);
-            if (!empty($customerId and $hotelId)) {
+        if ($this->validateId($id)) {
 
-                if ($this->validateId($id)) {
-                    $update = $this->rating->updateRatings($data, $id);
-                }
-            }    
+            $check_id=$this->rating->getRatings($id);
+            if ($check_id==null){            
+                $update=['message'=>'sorry but this id not exist'];
+            }
+            else{
+                $customer_id = $_POST['customer_id'];
+                $hotel_id = $_POST["hotel_id"];
+                $star = $_POST['star'];
+                $comment=$_POST["comment"];
+                if ($this->validateId($customer_id) && $this->validateId($hotel_id) &&
+                    $this->validateStar($star) && $this-> validateComment($comment)  ) {
+                        $data = [
+                             "star" => "$star",
+                             "customer_id" => "$customer_id",
+                             "hotel_id" => "$hotel_id",
+                             "comment"=>"$comment"];
+                if (!empty($data)) {
+
+                        $update = $this->rating->updateRatings($data, $id);
+                        echo json_encode($update);
+                    }
+                }    
         }
-        echo json_encode($update);
-    }
+    }}
+//...................................................................................................
     public function deleteRating($id)
-    {
-        $check_id=$this->rating->getRatings($id);
-        if ($check_id==null){            
-            $delete=['message'=>'sorry but this id not exist'];
+    {   
+        if($this->validateId($id)) {
+            $check_id=$this->rating->getRatings($id);
+            if ($check_id==null){            
+                $delete=['message'=>'sorry but this id not exist'];
+            }
+            else{
+
+                $delete = $this->rating->deleteRatings($id);
+            }
+            echo json_encode($delete);
         }
-        else{
-            if($this->validateId($id)) {
-            $delete = $this->rating->deleteRatings($id);
-        }}
-        echo json_encode($delete);
     }
+//...................................................................................................
     public  function validateStar($star){
-        if (is_integer($star) && $star>0 && $star<8)
-        {
-            return $star;
+
+        $validStars=array("0","0,5","1.5","1.5","2","2.5","3","3.5","4","4.5","5");
+        if(in_array($star,$validStars)){
+            return true;
         }
         else{
-            $response["msgErr"] = "sorry but the stars should be between 1 and 7'";
+            $response["msgErr"] = "sorry but the stars should be between 0 and 5";
             echo json_encode($response);   
         }
     
-        }
-    function validateComment($data){
+    }
+//...................................................................................................
+    public function validateComment($data){
         $data = trim($data);
         $data = htmlspecialchars($data);
         $data = stripslashes($data);
         return $data;
     }
-    function validateId($id)
+//..................................................................................................
+    public function validateId($id)
     {
-        $response = array();
+        
 
         if (is_numeric($id)) {
             return true;
@@ -100,19 +118,7 @@ public function __construct($rating)
             $response["msgErr"] = "id should be integer number";
             echo json_encode($response);
         }
-    }
+    }    
 }
-// public function showReviews($hotel_id){
-
-//     $hotel_name=$this->rating->showReviews($hotel_id);
-//     // var_dump($hotel_name);
-
-// }
-// public function showTheTotalRate($hotel_id){}
-// public function insertRateAndComment(){}
-// public function editCommentOrRate($customer_id){}
-// public function deleteRate($id){}
-
-// }
-
+// THE END
 ?>

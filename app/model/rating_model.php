@@ -21,6 +21,7 @@ class Rating_model {
             return  $this->db->get("ratings");
         }
     }
+  
 //.....................................................................
     public function getComment(){
         $comments = $this->db->getValue("ratings","comment",null);
@@ -36,10 +37,12 @@ class Rating_model {
     {
         $rating=$this->db->insert('ratings', $data);
         if ($rating) {
-            $response = ['message' => 'rating was added'];
+            $response = ['status'=>true,
+                        'message' => 'rating was added'];
             return $response;
         } else {
-            $response = ['message' => 'failed to add rating : ' . $this->db->getLastError()];
+            $response = ['status'=>false,
+                        'message' => 'failed to add rating : ' . $this->db->getLastError()];
             return $response;
         }
     }
@@ -48,10 +51,12 @@ class Rating_model {
     {
         $this->db->where("id", $id);
         if ($this->db->update("ratings", $data)) {
-            $response = ['message' => 'rating was updated'];
+            $response = ['status'=>true,
+                        'message' => 'rating was updated'];
             return $response;
         } else {
-            $response = ['message' => 'update failed : ' . $this->db->getLastError()];
+            $response = ['status'=>false,
+                        'message' => 'update failed : ' . $this->db->getLastError()];
             return $response;
         }
     }
@@ -60,10 +65,12 @@ class Rating_model {
     {
         $this->db->where("id", $id);
         if ($this->db->delete("ratings")) {
-            $response = ['message' => 'rating was deleted'];
+            $response = [ 'status'=>true,
+                          'message' => 'rating was deleted'];
             return $response;
         } else {
-            $response = ['message' => 'delete failed : ' . $this->db->getLastError()];
+            $response = [ 'status'=>false,
+                        'message' => 'delete failed : ' . $this->db->getLastError()];
             return $response;
         }
     }

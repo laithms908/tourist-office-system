@@ -5,29 +5,17 @@ class Rating_controller
 {
     private $rating;
     private $customer;
-    public function __construct($rating,$customer=null)
+    public function __construct($rating)
     {
         $this->rating = $rating;
-        // $this->customer=$customer;
     }
-//...................................................................................................
-    public function selectRatings()
-    { 
-        // $customerName=$this->customer->getCustomerName();
-        $stars=$this->rating->getStars();
-        $comment=$this->rating->getComment();
-        $showReviews=array_map(function($stars,$comment){
-            return " stars " . $stars . " comment : "  .$comment ;},$stars,$comment);
-        
-        echo json_encode($showReviews);
-    }
-//...................................................................................................
+
     public function insertRatings()
     {
-        $customer_id = $_POST['customer_id'];
-        $hotel_id=$_POST["hotel_id"];
-        $star = $_POST['star'];
-        $comment =$_POST['comment'];
+        $customer_id = $_POST['customer_id'] ?? "" ;
+        $hotel_id=$_POST["hotel_id"] ?? "";
+        $star = $_POST['star'] ?? "";
+        $comment =$_POST['comment'] ?? "";
         
         if ($this->validateId($customer_id) && $this->validateId($hotel_id) &&
          $this->validateStar($star) && $this-> validateComment($comment)  ) {
@@ -53,10 +41,10 @@ class Rating_controller
                 $update=['message'=>'sorry but this id not exist'];
             }
             else{
-                $customer_id = $_POST['customer_id'];
-                $hotel_id = $_POST["hotel_id"];
-                $star = $_POST['star'];
-                $comment=$_POST["comment"];
+                $customer_id = $_POST['customer_id'] ?? "";
+                $hotel_id = $_POST["hotel_id"] ?? "";
+                $star = $_POST['star'] ?? "";;
+                $comment=$_POST["comment"] ?? "";
                 if ($this->validateId($customer_id) && $this->validateId($hotel_id) &&
                     $this->validateStar($star) && $this-> validateComment($comment)  ) {
                         $data = [
@@ -109,9 +97,7 @@ class Rating_controller
     }
 //..................................................................................................
     public function validateId($id)
-    {
-        
-
+    {       
         if (is_numeric($id)) {
             return true;
         } else {

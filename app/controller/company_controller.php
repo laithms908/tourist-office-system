@@ -11,19 +11,11 @@ class Company_controller
         $this->company = $company;
     }
 //...............................................................................................
-    public function selectCompany()
-    {
-        $companies = $this->company->getCompany();
-        
-        echo json_encode($companies);
-        // header("location:/");
-    }
-//........................................................................................................
-    public function insertCompany()
+   public function insertCompany()
     {
 
-        $name = $_POST['name'];
-        $phone = $_POST['phone'];
+        $name = $_POST['name'] ?? "";
+        $phone = $_POST['phone'] ?? "";
 
         if($this->validateName($name) && $this->validatePhoneNumber($phone)){
             $data = [
@@ -47,8 +39,8 @@ class Company_controller
                 $update=['message'=>'sorry but this id not exist'];
             }
             else {
-                $name = $_POST['name'];
-                $phone = $_POST['phone'];
+                $name = $_POST['name'] ?? "";
+                $phone = $_POST['phone'] ?? "";
                 $data=array();
                 if($this->validateName($name) && $this->validatePhoneNumber($phone)){
                     $data = [
@@ -115,7 +107,7 @@ class Company_controller
 //.....................................................................................................................   
     public function validateId($id)
     {
-        if(is_integer($id)){
+        if(is_numeric($id)){
             return true;
         }
         else{

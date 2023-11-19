@@ -33,8 +33,6 @@ $request = $_SERVER['REQUEST_URI'];
 
 define("BASE_PATH", "/");
 
-use customer_m\Customer_model;
-$customer= new Customer_model();
 
 use company_m\Company_model;
 use company_c\Company_controller;
@@ -50,12 +48,7 @@ $ratingC= new Rating_controller($rating);//$hotelC
 
 switch($request)
 {
-    case BASE_PATH :
-        echo "welcom to our tourist-office-system";
-        break;
-    case BASE_PATH . "showRatings":
-        $ratingC->selectRatings();
-        break;    
+    
     case BASE_PATH . "addRating":
         $ratingC->insertRatings();
         break;    
@@ -65,9 +58,7 @@ switch($request)
     case BASE_PATH . "deleteRating?id=" . $_GET['id']:
         $ratingC->deleteRating($_GET['id']);
         break;
-    case BASE_PATH . "showCompanies":
-        $companyC->selectCompany();
-        break;
+
     case BASE_PATH . "addcompany":
         $companyC->insertCompany();
         break;
@@ -76,12 +67,6 @@ switch($request)
         break;
     case BASE_PATH . "deleteCompany?id=" . $_GET['id']:
         $companyC->deletecompany($_GET['id']);
-        break;
-
-
-    default :
-        $response = ['message' => 'no such an action'];
-        echo json_encode($response);
         break;
 
 }

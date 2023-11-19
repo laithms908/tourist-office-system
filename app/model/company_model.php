@@ -24,9 +24,16 @@ class Company_model{
 
     public function insertcompanies($data)
     {
-        $company=$this->db->insert('companies', $data);
-        $company = ['message' => 'company was added successfully'];
-        return $company;
+        if($this->db->insert('companies', $data)){
+            $response = ['status'=>true,
+                        'message' => 'company was added successfully'];
+            return $response;
+        }
+        else{
+            $response=['status'=>false,
+                    'message'=>'add was failed : '. $this->db->getLastError()];
+            return $response;
+        }
     }
 
     public function updateCompanies($data, $id)
@@ -34,11 +41,13 @@ class Company_model{
         $this->db->where("id", $id);
         if($this->db->update("companies", $data)){
 
-            $response = ['message' => 'company was updated'];
+            $response = ['status'=>true,
+                        'message' => 'company was updated'];
             return $response;
         }
         else{
-            $response=['message'=>'update failed : '. $this->db->getLastError()];
+            $response=['status'=>false,
+                      'message'=>'update failed : '. $this->db->getLastError()];
             return $response;
         }
     }
@@ -48,12 +57,14 @@ class Company_model{
         $this->db->where("id", $id);
         if($this->db->delete('companies')){
 
-            $response = ['message' => 'company was deleted'];
+            $response = ['status'=>true,
+                        'message' => 'company was deleted'];
             return $response;
         }
         else{
 
-            $response = ['message' => 'delete failed : ' . $this->db->getLastError()];
+            $response = ['status'=>false,
+                        'message' => 'delete failed : ' . $this->db->getLastError()];
             return $response;
         }
     }

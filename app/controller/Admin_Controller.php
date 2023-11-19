@@ -2,18 +2,20 @@
 namespace admin_c ;
 
 class Admin_Controller{
+    private $admin;
     private $model;
     
     public function __construct($admin){
-        $this->model = $admin;
+        $this->admin = $admin;
         
     }
     public function login(){
             $email = $_POST['email'];
             $password = $_POST['password'];
             // Validate 
-            $admin = $this->model->findAdminByEmail($email);
-            if ($admin && password_verify($password, $admin->password)) {
+            $admin = fetch_assoc($this->model->findAdminByEmail($email));
+            
+            if ($admin && password_verify($password, $admin['password'])) {
                 // Login successful
                 session_start();
                 // Set the session cookie to expire when the browser is closed

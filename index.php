@@ -30,19 +30,13 @@ $db = new MysqliDb(
 );
 
 $request = $_SERVER['REQUEST_URI'];
-
 define("BASE_PATH", "/");
 #define("BASE_PATH", "/tourist-office-system/");
-
-
 use admin_c\Admin_Controller;
-$admin= new Admin_Controller();
+$admin_c= new Admin_Controller($admin);
 
 use admin_m\Admin_model;
-$admin_m= new Admin_model($db);
-
-
-
+$admin_m= new Admin_model($db); 
 switch($request)
 {
     case BASE_PATH. "login":

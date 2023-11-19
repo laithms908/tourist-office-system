@@ -18,10 +18,8 @@ class Admin_Controller{
                 session_start();
                 // Set the session cookie to expire when the browser is closed
                 setcookie(session_name(), session_id(), 0, '/', '', false, true);
-                $adminData = [
-                    'admin_id' => $admin->id
-                ];
-                $_SESSION['id'] = $adminData;
+                $id = $admin[0];
+                $_SESSION['id'] = $id;
                 $url = '/index.php';
                 $json = json_encode(array('url' => $url));
                 echo $json;
@@ -59,9 +57,9 @@ class Admin_Controller{
     public function editAdmin($id){
         $this->id = $id;
         if($this->db=edit($id)){
-            echo json_encode(['status' => true, 'message' => 'Admin added successfully.']);
+            echo json_encode(['status' => true, 'message' => 'Admin edited successfully.']);
         } else {
-            echo json_encode(['status' => false, 'message' => 'Failed to add admin.']);
+            echo json_encode(['status' => false, 'message' => 'Failed to edit admin.']);
         }
 
 
@@ -69,9 +67,9 @@ class Admin_Controller{
     public function deleteAdmin($id){
         $this->id = $id;
         if($this->db=delete($id)){
-            echo json_encode(['status' => true, 'message' => 'Admin added successfully.']);
+            echo json_encode(['status' => true, 'message' => 'Admin deleted successfully.']);
         } else {
-            echo json_encode(['status' => false, 'message' => 'Failed to add admin.']);
+            echo json_encode(['status' => false, 'message' => 'Failed to delete admin.']);
         }
     
     }

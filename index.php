@@ -50,17 +50,17 @@ switch($request)
         break;
     case BASE_PATH . "signOut":
         $admin->signOut();
-        break;
-    case BASE_PATH . "index":
+        break; 
+    case BASE_PATH . "index". $_GET['id']:
         $customer->index();
         break;
-    case BASE_PATH . "insertCustomer":
+    case BASE_PATH . "insertCustomer". $_GET['id']:
         $customer->insertCustomer();
         break;
-    case BASE_PATH . "updateCustomer" :
+    case BASE_PATH . "updateCustomer". $_GET['id'] :
         $customer->updateCustomer($id);
         break;
-    case BASE_PATH . "deleteCustomers" :
+    case BASE_PATH . "deleteCustomers". $_GET['id'] :
         $customer->deleteCustomers($id);
         break;   
     default :

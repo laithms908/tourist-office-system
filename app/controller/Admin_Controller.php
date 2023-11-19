@@ -9,10 +9,8 @@ class Admin_Controller{
         
     }
     public function login(){
-        #if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $email = $_post['email'];
             $password = $_post['password'];
-
             // Validate 
             $admin = $this->model->findAdminByEmail($email);
             if ($admin && password_verify($password, $admin->password)) {
@@ -20,11 +18,12 @@ class Admin_Controller{
                 session_start();
                 // Set the session cookie to expire when the browser is closed
                 setcookie(session_name(), session_id(), 0, '/', '', false, true);
-                $_SESSION['admin_id'] = $admin->id;
-                
-                
+                $adminData = [
+                    'admin_id' => $admin->id
+                ];
+                $_SESSION['id'] = $adminData;
                 $url = '/index.php';
-                $json = json_encode($url);
+                $json = json_encode(array('url' => $url));
                 echo $json;
             } else {
                 // Login failed
@@ -33,10 +32,8 @@ class Admin_Controller{
                 ];
                 echo json_encode(array("status"=>true,
                 "date"=>$data));
-                
                 echo json_encode($errors);
             }
-        #}
     }
 
     public function signOut(){

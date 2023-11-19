@@ -22,6 +22,12 @@ class Customer_model
         return $this->db->getValue("customers", "name");
     }
 
+    public function getCustomersName(){
+        $customersName = $this->db->getValue("customers","name",null);
+        return $customersName;
+    }
+
+    
     public function addCustomer($data)
     {
         $customer = $this->db->insert('customers', $data);

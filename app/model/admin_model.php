@@ -1,6 +1,6 @@
 <?php
 
-namespace admin_m;
+//namespace admin_m;
 
 class Admin_model{
     private $db;

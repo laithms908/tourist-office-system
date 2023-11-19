@@ -3,13 +3,13 @@ namespace  customer_c;
 class Customer_Controller{
     private $customer;
 
-    public function __construct(){
+    public function __construct($customer){
         $this->customer = $customer;
 
     }
     public function index() {
         $customers = $this->db->getCustomer();
-
+        echo json_encode($customers) ; 
         
     }
 
@@ -23,7 +23,7 @@ class Customer_Controller{
                 'name' => $customername,
                 'phone' => $customerphone,
                 'gender' => $customergender,
-                'email' => $customeremail,
+                'email' => $customeremail
             ];
 
             if ($this->db->addCustomer($data)) {
@@ -42,7 +42,7 @@ class Customer_Controller{
             $password = $_POST['password'];
             $data = [
                 'username' => $username,
-                'password' => $password,
+                'password' => $password
             ];
 
             if ($this->db->editCustomer($id, $data)) {

@@ -2,15 +2,15 @@
 namespace admin_c ;
 
 class Admin_Controller{
-    private $admin;
+    private $model;
     
     public function __construct($admin){
-        $this->admin = $admin;
+        $this->model = $admin;
         
     }
     public function login(){
-            $email = $_post['email'];
-            $password = $_post['password'];
+            $email = $_POST['email'];
+            $password = $_POST['password'];
             // Validate 
             $admin = $this->model->findAdminByEmail($email);
             if ($admin && password_verify($password, $admin->password)) {

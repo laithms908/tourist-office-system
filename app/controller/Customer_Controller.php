@@ -1,5 +1,6 @@
 <?php
 namespace  customer_c;
+
 class Customer_Controller{
     private $customer;
 
